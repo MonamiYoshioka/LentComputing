@@ -15,6 +15,7 @@ def run():
     # Get dictionary of rivers as keys with a list of station objects
     river_station_dic = stations_by_river(stations)
     
+    # List the stations in these rivers in alphabetical order
     list_rivers = ['River Aire', 'River Cam', 'River Thames']
     for river in list_rivers:
         list_stations = river_station_dic[river]

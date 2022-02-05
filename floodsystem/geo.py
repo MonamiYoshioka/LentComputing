@@ -43,3 +43,17 @@ def stations_by_river(stations):
             dic_stations_river[key] = [station.name]
         
     return dic_stations_river
+
+
+# Task 1E
+def rivers_by_station_number(stations, N):
+    """Determine N rivers with greatest number of stations
+
+    Args:
+        stations (list): list of MonitoringStation objects
+        N (int): number of stations
+    Return:
+        list: sorted list of (river name, number of stations) tuple
+    """
+    
+    
