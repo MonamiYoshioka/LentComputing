@@ -5,6 +5,27 @@
 
 """
 
+# For Task 1E
+def get_N_max_integers(dictionary, N):
+  """Find the N rivers with the greatest number of monitoring stations
+
+  Args:
+      stations (list): list of MonitoringStation objects
+      N (int): max number of station numbers
+
+  Returns:
+      list: list of N maximum integers in the dictionary values
+  """
+  
+  # Order list (highest values first)
+  dictionary = dict(sorted(dictionary.items(), key=lambda x:x[1], reverse=True))
+  
+  # Create a list with the N max integers
+  numbers = []
+  [numbers.append(value) for key, value in dictionary.items() if value not in numbers]
+  numbers = numbers[:N]
+  return numbers
+
 
 def sorted_by_key(x, i, reverse=False):
     """For a list of lists/tuples, return list sorted by the ith

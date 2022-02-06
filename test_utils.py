@@ -3,6 +3,18 @@
 import floodsystem.utils
 
 
+# Test created in Task 1E
+def test_get_N_max_integers():
+    """Test wether fucntion outputs N max integers (including duplicates)"""
+    
+    dict1 = {'a':1, 'b':2, 'c':3, 'd':3, 'e':5, 'f':5, 'g':5, 'h':6}
+    list1 = floodsystem.utils.get_N_max_integers(dict1, 3)
+    
+    assert list1[0] == 6
+    assert list1[1] == 5
+    assert list1[2] == 3
+
+
 def test_sort():
     """Test sort container by specific index"""
 
@@ -55,3 +67,5 @@ def test_reverse_sort():
     assert list1[0] == c
     assert list1[1] == a
     assert list1[2] == b
+
+test_get_N_max_integers()

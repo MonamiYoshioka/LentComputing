@@ -6,8 +6,7 @@ geographical data.
 
 """
 
-from .utils import sorted_by_key  # noqa
-
+from .utils import sorted_by_key, get_N_max_integers  # noqa
 
 # Task 1D
 def rivers_with_station(stations):
@@ -51,9 +50,27 @@ def rivers_by_station_number(stations, N):
 
     Args:
         stations (list): list of MonitoringStation objects
-        N (int): number of stations
+        N (int): max number of station numbers
     Return:
         list: sorted list of (river name, number of stations) tuple
     """
     
+    # Create a dictionary of rivers as keys
+    river_number_stations = {}
+    for station in stations:
+        if station.river in river_number_stations:
+            river_number_stations[station.river] += 1
+        else:
+            river_number_stations[station.river] = 1
     
+    # Sort dictionary values in ascending order:
+    river_number_stations = dict(sorted(river_number_stations.items(), key=lambda x:x[1], reverse=True))
+    
+    # Function to get N max integers of the dictionary values without duplicates
+    numbers = get_N_max_integers(river_number_stations, N)
+    
+    # Find rivers with 'numbers' amount of stations and create a list with them
+    # List of tuples -> (river name, numnber of stations)
+    final_list = []
+    [final_list.append((key, value)) for key, value in river_number_stations.items() if value in numbers]
+    return final_list
