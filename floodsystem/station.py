@@ -46,7 +46,15 @@ class MonitoringStation:
         Return:
             bool: True if data is consistent, False if inconsistent or unavailable
         """
-        pass
+        
+        try:
+            # Compare the first and last values in the typical_range tuple
+            # If the second value is higher than the first, then data is consistent
+            if self.typical_range[0] < self.typical_range[1]: return True
+            else: return False
+        except:
+            # No data available for the typical_range, omit station
+            return False
     
 # Created in Task 1F
 def inconsistent_typical_range_stations(stations):
@@ -57,4 +65,11 @@ def inconsistent_typical_range_stations(stations):
     Return:
         list: stations that have inconsistent data
     """
-    pass
+    
+    inconsistent_stations = []
+    for station in stations:
+        is_data_consistent = station.typical_range_consistent()
+        if is_data_consistent != True:
+            inconsistent_stations.append(station)
+    
+    return inconsistent_stations
