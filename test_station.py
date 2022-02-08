@@ -31,6 +31,9 @@ def test_create_monitoring_station():
     
 # Test created for Task 1F
 def test_inconsistent_typical_range_stations():
+    """Test created to see if the invalid_stations are the correct ones
+        by looking at their typical_ranges values
+    """
     # Build list of stations
     stations = build_station_list()
     # Build a list of stations iwht inconsistent typical range data
