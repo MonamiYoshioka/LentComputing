@@ -7,6 +7,7 @@ geographical data.
 """
 
 from .utils import sorted_by_key, get_N_max_integers  # noqa
+from haversine import haversine 
 
 # Task 1B
 def stations_by_distance(stations, p):
