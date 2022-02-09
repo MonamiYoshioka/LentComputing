@@ -12,8 +12,8 @@ def test_stations_by_distance():
     cambridge = (52.2053, 0.1218)
     check = stations_by_distance(stations,cambridge)
     print(check)
-    assert check [0][1] > 0
-    assert check [-1][1] < 1000 
+    assert check [0][2] > 0
+    assert check [-1][2] < 1000 
 
 
 def test_stations_within_radius():
