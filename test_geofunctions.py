@@ -20,8 +20,8 @@ def test_stations_within_radius():
 
     stations = build_station_list()
     cambridge = (52.2053, 0.1218)
-    assert len(stations_within_radius(stations, (cambridge), 10)) == 0
-    assert len(stations_within_radius(stations, (cambridge), 10)) == 0
+    assert len(stations_within_radius(stations, (cambridge), 10)) == 11
+    assert len(stations_within_radius(stations, (cambridge), 0)) == 0
 
 
 def test_rivers_by_station_number():
