@@ -40,7 +40,7 @@ def stations_within_radius(stations, centre, r):
         if radius<r:
             radius_list.append(each.name)
 
-    radius_list = sorted_by_key(radius_list, 1)
+    radius_list = sorted(radius_list)
     return radius_list
 
 
