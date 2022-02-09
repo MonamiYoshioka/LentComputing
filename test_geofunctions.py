@@ -19,6 +19,3 @@ def test_rivers_by_station_number():
     assert len(list1) >= 3
     assert len(list2) >= 9
     assert len(list3) >= 15
-    
-    
-test_rivers_by_station_number()
