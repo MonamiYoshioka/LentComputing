@@ -8,6 +8,42 @@ geographical data.
 
 from .utils import sorted_by_key, get_N_max_integers  # noqa
 
+# Task 1B
+def stations_by_distance(stations, p):
+    """this function creates a sorted list of stations and their distances from a coordinate,p
+    
+    Args:
+        stations(list): list of MonitoringStation class objects
+        p(tuple): tuple of coordinates (longitude, latitude)
+
+    Returns:
+        list: a list of tuples sorted by decending distance from coordinate p
+    """
+    distance_list = []
+    for each in stations:
+        coord = each.coord
+        distance = haversine(p, coord)
+        temp_tuple = (each.name, each.town, distance)
+        distance_list.append(temp_tuple)
+    distance_list = sorted_by_key(distance_list, 1)
+    return distance_list
+
+# Task 1C
+def stations_within_radius(stations, centre, r):
+    """prints an alphabetic list of the stations withink a radius, r, around a centre"""
+    radius_list = []
+    for each in stations:
+        coord = each.coord
+        radius = haversine(coord,centre)
+        
+        if radius<r:
+            radius_list.append(each.name)
+
+    radius_list = sorted_by_key(radius_list, 1)
+    return radius_list
+
+
+
 # Task 1D
 def rivers_with_station(stations):
     """Find rivers which have monitoring stations
