@@ -1,0 +1,23 @@
+from floodsystem.stationdata import build_station_list
+from floodsystem.station import MonitoringStation
+from floodsystem.flood import stations_over_threshold
+
+def run():
+    station = build_station_list()
+
+    tol = 0.8
+
+    station_threshold = stations_over_threshold(station,tol)
+
+    for station in station_threshold:
+        print(station)
+
+
+if __name__ == "__main__":
+    print("*** Task 2B: CUED Part IA Flood Warning System ***")
+    run()
+
+
+
+
+
