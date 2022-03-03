@@ -61,7 +61,6 @@ class MonitoringStation:
     #created for Task 2B
     def relative_water_level(self):
         """returns latest water level as a fraction of the typical range"""
-
         if type(self.latest_level) != float or self.typical_range is None:
             return None
         else:

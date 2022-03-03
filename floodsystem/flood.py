@@ -21,13 +21,15 @@ def stations_level_over_threshold(stations, tol):
     consistent_stations = consistent_typical_range_stations(stations)
 
     for station in consistent_stations:
+        
         relative_water_level = MonitoringStation.relative_water_level(station)
         
         if relative_water_level is None:
             pass
         elif relative_water_level > tol:
             stations_over_tol.append((station.name, relative_water_level))
-            
+            i = station
+
     return sorted(stations_over_tol, key = lambda x:x[1], reverse=True)
 
 
@@ -42,7 +44,7 @@ def stations_highest_rel_level(stations, N):
         list: stations with the highest water levels relative to the typical range
     """
     stations_with_highest_level = []
-    # Build a list of stations iwht inconsistent typical range data
+    # Build a list of stations wiht inconsistent typical range data
     consistent_stations = consistent_typical_range_stations(stations)
     
     for station in consistent_stations:
