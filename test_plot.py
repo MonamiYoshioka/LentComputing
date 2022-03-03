@@ -1,12 +1,13 @@
-import datetime
-from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.stationdata import build_station_list, update_water_levels
-from floodsystem.plot import plot_water_level
+from floodsystem.plot import plot_gradient
+import datetime
 from floodsystem.flood import stations_highest_rel_level
+from floodsystem.datafetcher import fetch_measure_levels
 
-def run():
-    # Build list of stations
+def test_plot_gradient():
+    # Make list of stations, and get their water level values
     stations = build_station_list()
+    update_water_levels(stations)
     
     # Get N stations with the greatest water levels
     N = 5
@@ -14,13 +15,13 @@ def run():
     N_stations = stations_highest_rel_level(stations, N)
     
     # Plot the water level data against time (past dt days) for each station in N_stations
-    dt = 10
+    dt = 2
     for station in stations:
         if station.name in (i[0] for i in N_stations):
             dates, level = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
-            plot_water_level(station, dates, level)
+            try:
+                plot_gradient(station, dates, level, 4)
+            except:
+                print(f"Valid data not available for {station.name}")
 
-
-if __name__ == "__main__":
-    print("*** Task 2E: CUED Part IA Flood Warning System ***")
-    run()
+test_plot_gradient()
