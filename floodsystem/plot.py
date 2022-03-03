@@ -67,3 +67,25 @@ def plot_water_level_with_fit(station, dates, levels, p):
     plt.tight_layout()
     
     plt.show()
+
+
+# Created in Task 2G
+def plot_gradient(station, dates, levels, p):
+    dates_floats = matplotlib.dates.date2num(dates)
+    poly, d0 = polyfit(dates_floats, levels, p)
+    
+    x1 = np.linspace(d0, dates_floats[-1], 30)
+    y = poly(x1 - d0)
+    dydx = np.diff(y)/np.diff(x1)
+    
+    plt.plot(x1[:-1], dydx, label="gradient")
+    
+    # Add axix labels, rotate date labels, add title
+    plt.xlabel('Date')
+    plt.ylabel('dWater level (m)/dx')
+    plt.xticks(rotation=45)
+    plt.title(f'Station: {station.name}')
+    plt.legend()
+    plt.tight_layout()
+    
+    plt.show()
