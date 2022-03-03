@@ -1,5 +1,4 @@
 from floodsystem.station import MonitoringStation
-from floodsystem.stationdata import update_water_levels
 from floodsystem.station import consistent_typical_range_stations
 
 
@@ -14,7 +13,6 @@ def stations_level_over_threshold(stations, tol):
     Returns:
         list: list of tuples where each tuple holds a station object and the relative water level
     """
-    update_water_levels(stations)
     stations_over_tol = []
     
     # Build a list of stations iwht inconsistent typical range data
