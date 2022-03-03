@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib
+from floodsystem.flood import stations_level_over_threshold
+from floodsystem.datafetcher import fetch_measure_levels
+import datetime
 
 # Created in Task 2F
 def polyfit(dates, levels, p):
@@ -43,3 +46,45 @@ def gradient_analysis(dates, levels, p):
     dydx = np.diff(y)/np.diff(x1)
     
     return dydx[-1]
+
+def create_flood_risk_list(stations, tol, gradient_thresh):
+    severe = []
+    high = []
+    moderate = []
+    low = []
+    
+    # Find stations whose current high levels are above the tolerance (SEVERE, HIGH and MODERATE risks)
+    station_relative_level_over_tol = []
+    station_threshold = stations_level_over_threshold(stations, tol)
+    for station in station_threshold:
+        station_relative_level_over_tol.append(station)
+    
+    # Check wether the polyfit gradient is above or below zero
+    # If above zero, water level is rising
+    dt = 2
+    for station in stations:
+        if station.name in (i[0] for i in station_relative_level_over_tol):
+            dates, level = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
+            try:
+                gradient = gradient_analysis(dates, level, 4)
+                if gradient > gradient_thresh:
+                    severe.append(station)
+                    station.gradient = gradient
+                else:
+                    high.append(station)
+                    station.gradient = gradient
+            except:
+                pass
+        else:
+            try:
+                gradient = gradient_analysis(dates, level, 4)
+                if gradient > gradient_thresh:
+                    moderate.append(station)
+                    station.gradient = gradient
+                else:
+                    low.append(station)
+                    station.gradient = gradient
+            except:
+                pass
+    
+    return severe, high[:5], moderate[:5], low[:5]

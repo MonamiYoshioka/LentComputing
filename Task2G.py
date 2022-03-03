@@ -3,17 +3,15 @@
     
     Criteria used to make the assessment:
     'Severe' - the current relative water level is 50% higher than the typical high AND the water level at the station is rising
-    'High' - the latest water level is higher than the typical high AND the water level at the station is rising AND water level is above typical low
-    'Moderate' - the latest water level is higher than the typical high OR the water level at the station is rising AND water level is below typical low
+    'High' - the latest water level is higher than the typical high but water level is not risinf
+    'Moderate' - the water level at the station is rising but water level is not above typical high
     'Low' - the latest water level is not higher than the typical high and the water level at the station is not rising
 """
 
 from floodsystem.stationdata import build_station_list, update_water_levels
-from floodsystem.flood import stations_level_over_threshold
-from floodsystem.analysis import gradient_analysis
-from floodsystem.datafetcher import fetch_measure_levels
-import datetime
+from floodsystem.analysis import create_flood_risk_list
 from floodsystem.station import MonitoringStation
+from floodsystem.utils import print_risk
 
 def run():
     # Make list of stations, and get their water level values
@@ -24,35 +22,12 @@ def run():
     tol = 1.5
     gradient_thresh = 0.1
     
-    station_relative_level_over_1 = []
-    station_severe_risk = []
-    station_threshold = stations_level_over_threshold(stations, tol)
-    for station in station_threshold:
-        station_relative_level_over_1.append(station)
-    
-    # Check wether the polyfit gradient is above or below zero
-    # If above zero, water level is rising
-     # Plot the water level data against time (past dt days) for each station in N_stations
-    dt = 2
-    for station in stations:
-        if station.name in (i[0] for i in station_relative_level_over_1):
-            dates, level = fetch_measure_levels(station.measure_id, dt=datetime.timedelta(days=dt))
-            try:
-                gradient = gradient_analysis(dates, level, 4)
-                if gradient > gradient_thresh:
-                    station_severe_risk.append(station)
-                    station.gradient = gradient
-            except:
-                print(f"Valid data not available for {station.name}")
-    
-    
-    print(f"----------------------------------------------------------\n")
-    print(f"List of stations at a SEVERE risk of flooding:\n")
-    print(f"----------------------------------------------------------\n")
-    for station in station_severe_risk:
-        print(f"Name: {station.name}")
-        print(f"Current relative water level: {MonitoringStation.relative_water_level(station)}")
-        print(f"Water level rising at a rate of: {station.gradient} \n")
+    severe, high, moderate, low = create_flood_risk_list(stations, tol, gradient_thresh)
+        
+    print_risk(severe, "SEVERE")
+    print_risk(high, "HIGH")
+    print_risk(moderate, "MODERATE")
+    print_risk(low, "LOW")
 
 
 if __name__ == "__main__":

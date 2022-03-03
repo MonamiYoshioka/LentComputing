@@ -5,6 +5,8 @@
 
 """
 
+from floodsystem.station import MonitoringStation
+
 # For Task 1E
 def get_N_max_integers(dictionary, N):
   """Find the N rivers with the greatest number of monitoring stations
@@ -48,3 +50,12 @@ def sorted_by_key(x, i, reverse=False):
         return element[i]
 
     return sorted(x, key=key, reverse=reverse)
+
+def print_risk(risk, text):
+  print(f"----------------------------------------------------------\n")
+  print(f"List of stations at a {text} risk of flooding:\n")
+  print(f"----------------------------------------------------------\n")
+  for station in risk:
+    print(f"Name: {station.name}")
+    print(f"Current relative water level: {MonitoringStation.relative_water_level(station)}")
+    print(f"Water level rising at a rate of: {station.gradient} \n")
